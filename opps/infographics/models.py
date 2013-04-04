@@ -59,10 +59,10 @@ class InfographicBoxInfographics(models.Model):
     def clean(self):
 
         if not self.infographic.published:
-            raise ValidationError('Infographic not published!')
+            raise ValidationError(_(u'Infographic not published!'))
 
-        if self.infographic.date_available <= timezone.now():
-            raise ValidationError('Infographic not published!')
+        if not self.infographic.date_available <= timezone.now():
+            raise ValidationError(_(u'Infographic date_available is greater than today!'))
 
 
 class InfographicConfig(BaseConfig):
