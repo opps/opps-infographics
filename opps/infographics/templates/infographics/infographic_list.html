@@ -1,0 +1,18 @@
+{% load thumbor_tags %}
+{% load endless %}
+Opps Infographic List
+
+{% paginate infographics %}
+<ul>
+  {% for infographic in infographics %}
+  <li>
+    {% if infographic.main_image %}
+    <img src="{% thumbor_url infographic.main_image.image.url width=10 %}" />
+    {% endif %}
+    <a href="{% url 'infographics:open_infographic' infographic.slug %}" alt="{{ infographic.title }}">{{ infographic.title }}</a>
+  </li>
+  {% empty %}
+         No infographics
+  {% endfor %}
+</ul>
+{% show_pages %}
