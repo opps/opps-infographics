@@ -10,7 +10,40 @@ from opps.core.models import Publishable, BaseBox, BaseConfig
 
 
 class Infographic(Publishable):
-    pass
+    title = models.CharField(_(u"Title"), max_length=255)
+    slug = models.SlugField(_(u"URL"), max_length=150, unique=True,
+                            db_index=True)
+
+    headline = models.TextField(_(u"Headline"), blank=True)
+    description = models.TextField(_(u"Description"), blank=True)
+    channel = models.ForeignKey('channels.Channel', null=True, blank=True,
+                                on_delete=models.SET_NULL)
+    posts = models.ManyToManyField('articles.Post', null=True, blank=True,
+                                   related_name='infographic_post',
+                                   through='InfographicPost')
+    items = models.ManyToManyField('infographics.InfographicItem', null=True, blank=True,
+                                   related_name='infographic_item',
+                                   through='InfographicInfographicItem')
+
+    top_image = models.ForeignKey('images.Image',
+                                   verbose_name=_(u'Infographic Top Image'), blank=True,
+                                   null=True, on_delete=models.SET_NULL,
+                                   related_name='infographic_topimage')
+
+    main_image = models.ForeignKey('images.Image',
+                                   verbose_name=_(u'Infographic Image'), blank=True,
+                                   null=True, on_delete=models.SET_NULL,
+                                   related_name='infographic_image')
+
+    position  = models.IntegerField(_(u"Position"), default=0)
+    tags = TaggableManager(blank=True)
+
+
+    def __unicode__(self):
+        return self.title
+
+    class Meta:
+        ordering = ['position']
 
 
 class InfographicPost(models.Model):
