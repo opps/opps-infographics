@@ -35,7 +35,7 @@ class Infographic(Publishable):
                                    null=True, on_delete=models.SET_NULL,
                                    related_name='infographic_image')
 
-    position  = models.IntegerField(_(u"Position"), default=0)
+    order  = models.IntegerField(_(u"Order"), default=0)
     tags = TaggableManager(blank=True)
 
 
@@ -43,7 +43,7 @@ class Infographic(Publishable):
         return self.title
 
     class Meta:
-        ordering = ['position']
+        ordering = ['order']
 
 
 class InfographicPost(models.Model):

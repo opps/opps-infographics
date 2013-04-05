@@ -47,7 +47,7 @@ class InfographicAdmin(PublishableAdmin):
             'fields': ('channel',)}),
         (_(u'Publication'), {
             'classes': ('extrapretty'),
-            'fields': ('published', 'date_available', 'position')}),
+            'fields': ('published', 'date_available', 'order')}),
     )
 
 
