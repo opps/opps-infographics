@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
 from django.contrib import admin
 from django import forms
-from django.contrib.auth import get_user_model
-from django.contrib.sites.models import Site
 from django.utils.translation import ugettext_lazy as _
 
 from .models import (Infographic, InfographicPost, InfographicBox,
-                    InfographicBoxInfographics, InfographicConfig)
+                     InfographicBoxInfographics, InfographicConfig)
 
 from opps.core.admin import PublishableAdmin
 
@@ -16,7 +14,8 @@ from redactor.widgets import RedactorEditor
 class InfographicAdminForm(forms.ModelForm):
     class Meta:
         model = Infographic
-        widgets = {"headline": RedactorEditor(), "description": RedactorEditor()}
+        widgets = {"headline": RedactorEditor(),
+                   "description": RedactorEditor()}
 
 
 class InfographicPostInline(admin.TabularInline):
@@ -82,7 +81,8 @@ class InfographicBoxAdmin(PublishableAdmin):
 
 
 class InfographicConfigAdmin(PublishableAdmin):
-    list_display = ['key','key_group', 'channel', 'date_insert', 'date_available', 'published']
+    list_display = ['key', 'key_group', 'channel', 'date_insert',
+                    'date_available', 'published']
     list_filter = ["key", 'key_group', "channel", "published"]
     search_fields = ["key", "key_group", "value"]
     raw_id_fields = ['infographic', 'channel', 'article']

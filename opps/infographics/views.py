@@ -7,7 +7,6 @@ from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
-from django.utils.translation import ugettext_lazy as _
 
 from opps.channels.models import Channel
 from .models import Infographic
@@ -17,6 +16,7 @@ if not 'endless_pagination' in settings.INSTALLED_APPS:
     settings.INSTALLED_APPS += (
         'endless_pagination',
     )
+
 
 class InfographicList(ListView):
 
@@ -64,10 +64,10 @@ class ChannelInfographicList(ListView):
         long_slug = self.kwargs['channel__long_slug'][:-1]
         get_object_or_404(Channel, long_slug=long_slug)
         return Infographic.objects.filter(
-                   channel__long_slug=long_slug,
-                   published=True,
-                   date_available__lte=timezone.now()
-               )
+            channel__long_slug=long_slug,
+            published=True,
+            date_available__lte=timezone.now()
+        )
 
 
 class InfographicDetail(DetailView):
@@ -114,7 +114,6 @@ class InfographicDetail(DetailView):
             app_label, self.kwargs['slug']
         ))
 
-
         # The least-specific option is the default <app>/<model>_detail.html;
         # only use this if the object in question is a model.
         if hasattr(self.object, '_meta'):
@@ -135,11 +134,11 @@ class InfographicDetail(DetailView):
     def get_object(self):
         self.site = get_current_site(self.request)
         return get_object_or_404(
-                   Infographic,
-                   slug=self.kwargs['slug'],
-                   published=True,
-                   date_available__lte=timezone.now()
-               )
+            Infographic,
+            slug=self.kwargs['slug'],
+            published=True,
+            date_available__lte=timezone.now()
+        )
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
