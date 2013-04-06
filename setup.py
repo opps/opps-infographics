@@ -6,7 +6,7 @@ from setuptools import setup, find_packages
 from opps import infographics
 
 
-install_requires = ["opps"]
+install_requires = ["opps", "jsonfield"]
 
 classifiers = ["Development Status :: 4 - Beta",
                "Intended Audience :: Developers",
