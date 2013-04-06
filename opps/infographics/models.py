@@ -10,6 +10,14 @@ from opps.core.models import Publishable, BaseBox, BaseConfig
 
 
 class Infographic(Publishable):
+
+    TYPES = (
+        ("gallery", _(u"Photo Gallery")),
+        ("css", _(u"Custom CSS")),
+        ("timeline", _(u"Timeline")),
+        ("mixed", _(u"Mixed")),
+    )
+
     title = models.CharField(_(u"Title"), max_length=255)
     slug = models.SlugField(_(u"URL"), max_length=150, unique=True,
                             db_index=True)
@@ -21,15 +29,10 @@ class Infographic(Publishable):
     posts = models.ManyToManyField('articles.Post', null=True, blank=True,
                                    related_name='infographic_post',
                                    through='InfographicPost')
-    items = models.ManyToManyField('infographics.InfographicItem', null=True, blank=True,
-                                   related_name='infographic_item',
-                                   through='InfographicInfographicItem')
-
     top_image = models.ForeignKey('images.Image',
                                    verbose_name=_(u'Infographic Top Image'), blank=True,
                                    null=True, on_delete=models.SET_NULL,
                                    related_name='infographic_topimage')
-
     main_image = models.ForeignKey('images.Image',
                                    verbose_name=_(u'Infographic Image'), blank=True,
                                    null=True, on_delete=models.SET_NULL,
@@ -38,12 +41,64 @@ class Infographic(Publishable):
     order  = models.IntegerField(_(u"Order"), default=0)
     tags = TaggableManager(blank=True)
 
+    type = models.CharField(_(u"Infographic type"), max_length=20, choices=TYPES)
+    items = models.ManyToManyField('infographics.InfographicItem', null=True, blank=True,
+                                   related_name='infographic_item',
+                                   through='InfographicInfographicItem')
+
 
     def __unicode__(self):
         return self.title
 
     class Meta:
         ordering = ['order']
+
+
+class InfographicItem(Publishable):
+    title = models.CharField(_(u"Title"), max_length=255)
+    slug = models.SlugField(
+        _(u"URL"),
+        max_length=150,
+        db_index=True
+    )
+    description = models.TextField(_(u"Description"), blank=True)
+    order  = models.IntegerField(_(u"Order"), default=0)
+
+    #optional
+    group = models.CharField(
+        _(u"Group"),
+        max_length=255,
+        help_text=_(u'To group menu items or to store custom attributes')
+    )
+
+    image = models.ForeignKey(
+        'images.Image',
+         verbose_name=_(u'Infographic Item Image'),
+         blank=True,
+         null=True,
+         help_text=_(u'Image'),
+         on_delete=models.SET_NULL,
+    )
+    # gallery
+    #    album
+
+    # css
+    #    css_filepath
+    #    js_filepath
+
+    # timeline
+    #    check timelinejs
+
+    # mixed
+
+
+class InfographicInfographicItem(models.Model):
+    item = models.ForeignKey('infographics.InfographicItem', verbose_name=_(u'Infographic Item'), null=True,
+                             blank=True, related_name='infographicitem_item',
+                             on_delete=models.SET_NULL)
+    infographic = models.ForeignKey('infographics.Infographic', verbose_name=_(u'Infographic'), null=True,
+                                   blank=True, related_name='infographic',
+                                   on_delete=models.SET_NULL)
 
 
 class InfographicPost(models.Model):
