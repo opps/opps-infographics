@@ -4,7 +4,9 @@ from django import forms
 from django.utils.translation import ugettext_lazy as _
 
 from .models import (Infographic, InfographicPost, InfographicBox,
-                     InfographicBoxInfographics, InfographicConfig)
+                     InfographicBoxInfographics, InfographicConfig,
+                     InfographicItem, InfographicTimeline,
+                     InfographicTimelineSlide, InfographicInfographicItem)
 
 from opps.core.admin import PublishableAdmin
 
@@ -18,6 +20,12 @@ class InfographicAdminForm(forms.ModelForm):
                    "description": RedactorEditor()}
 
 
+class InfographicItemForm(forms.ModelForm):
+    class Meta:
+        model = InfographicItem
+        widgets = {"description": RedactorEditor()}
+
+
 class InfographicPostInline(admin.TabularInline):
     model = InfographicPost
     fk_name = 'infographic'
@@ -27,27 +35,108 @@ class InfographicPostInline(admin.TabularInline):
     classes = ('collapse',)
 
 
+class InfographicItemInline(admin.TabularInline):
+    model = InfographicInfographicItem
+    fk_name = 'infographic'
+    raw_id_fields = ['item']
+    actions = None
+    extra = 1
+    classes = ('collapse',)
+
+
 class InfographicAdmin(PublishableAdmin):
     form = InfographicAdminForm
     prepopulated_fields = {"slug": ["title"]}
-    list_display = ['title', 'channel', 'date_available', 'published']
+    list_display = ['title', 'channel', 'type', 'date_available', 'published']
     list_filter = ["date_available", "published", "channel"]
     search_fields = ["title", "headline", "description"]
     exclude = ('user',)
-    raw_id_fields = ['main_image', 'channel']
-    inlines = [InfographicPostInline]
+    raw_id_fields = ['main_image', 'top_image', 'channel', 'timeline']
+    inlines = [InfographicPostInline, InfographicItemInline]
 
     fieldsets = (
         (_(u'Identification'), {
             'fields': ('title', 'slug')}),
-        (_(u'Content'), {
-            'fields': ('headline', 'main_image', 'tags')}),
+        (_(u'Headline'), {
+            'fields': ('headline', 'main_image', 'top_image', 'tags')}),
+        (_(u'Description'), {
+            'fields': ('description',)}),
         (_(u'Relationships'), {
-            'fields': ('channel',)}),
+            'fields': ('channel', 'timeline')}),
+        (_(u'Config'), {
+            'fields': ('type', 'css_path', 'js_path')}),
         (_(u'Publication'), {
             'classes': ('extrapretty'),
             'fields': ('published', 'date_available', 'order')}),
     )
+
+
+class InfographicItemAdmin(admin.ModelAdmin):
+    raw_id_fields = ('image', 'album')
+    form = InfographicItemForm
+
+
+class InfographicTimelineSlideInline(admin.StackedInline):
+    model = InfographicTimelineSlide
+    fk_name = 'timeline'
+    # raw_id_fields = ['item']
+    actions = None
+    extra = 1
+    classes = ('collapse',)
+
+    fieldsets = [
+        (_(u"Basic"), {'fields': ('type', 'headline', 'text')}),
+        (_(u"Config"), {
+            'fields': (
+                ('start_date', 'end_date'),
+                ('tag', 'value'),
+                ('classname', 'order'),
+            )
+        }),
+        (_(u"Media"), {
+            'fields': (
+                ('media', 'thumbnail'),
+                ('caption', 'credit'),
+            )
+        })
+    ]
+
+
+class InfographicTimelineAdmin(admin.ModelAdmin):
+    inlines = (InfographicTimelineSlideInline,)
+    fieldsets = [
+        (_(u"Basic"), {'fields': ('title', 'json', 'source')}),
+        (_(u"Config"), {
+            'fields': (
+                ('type', 'embed_id', 'lang'),
+                ('width', 'height'),
+                ('start_at_end', 'hash_bookmark', 'debug'),
+                ('start_at_slide', 'start_zoom_adjust'),
+                ('maptype', 'gmap_key'),
+                'font',
+            )
+        })
+    ]
+
+
+class InfographicTimelineSlideAdmin(admin.ModelAdmin):
+    raw_id_fields = ('timeline',)
+    fieldsets = [
+        (_(u"Basic"), {'fields': ('type', 'headline', 'text')}),
+        (_(u"Config"), {
+            'fields': (
+                ('start_date', 'end_date'),
+                ('tag', 'value'),
+                ('classname', 'order'),
+            )
+        }),
+        (_(u"Media"), {
+            'fields': (
+                ('media', 'thumbnail'),
+                ('caption', 'credit'),
+            )
+        })
+    ]
 
 
 class InfographicBoxInfographicsInline(admin.TabularInline):
@@ -92,3 +181,6 @@ class InfographicConfigAdmin(PublishableAdmin):
 admin.site.register(Infographic, InfographicAdmin)
 admin.site.register(InfographicBox, InfographicBoxAdmin)
 admin.site.register(InfographicConfig, InfographicConfigAdmin)
+admin.site.register(InfographicItem, InfographicItemAdmin)
+admin.site.register(InfographicTimeline, InfographicTimelineAdmin)
+admin.site.register(InfographicTimelineSlide, InfographicTimelineSlideAdmin)

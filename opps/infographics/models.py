@@ -245,7 +245,7 @@ class InfographicTimeline(models.Model):
         null=True,
         blank=True
     )
-    lang = models.CharField(_(u"Title"), max_length=255, default='pt-br')
+    lang = models.CharField(_(u"Language"), max_length=255, default='pt-br')
     start_at_end = models.BooleanField(default=False)
     start_at_slide = models.IntegerField(default=0)
     start_zoom_adjust = models.IntegerField(default=0)
@@ -273,14 +273,14 @@ class InfographicTimeline(models.Model):
     __unicode__ = lambda self: self.title
 
 
-class InfographicTimelineItem(models.Model):
+class InfographicTimelineSlide(models.Model):
     # Timeline
     timeline = models.ForeignKey(
         'infographics.InfographicTimeline',
         verbose_name=_(u'Timeline'),
         null=True,
         blank=True,
-        related_name='infographicitem_timeline',
+        related_name='infographictimelineslide_timeline',
         on_delete=models.SET_NULL,
     )
 
@@ -291,29 +291,29 @@ class InfographicTimelineItem(models.Model):
         null=True,
         default='date',
         help_text=_(
-            u'Use "date",  "era", "title" or "chart"',
-            u' Note: Only one can be "title"',
+            u'Use "date",  "era", "title" or "chart"'
+            u' Note: Only one can be "title"'
             u' and "era" displays only headline and dates'
         )
     )
     headline = models.CharField(
-        _(u"Timeline Headline"),
+        _(u"Headline"),
         max_length=255,
         blank=True,
         null=True
     )
     text = models.TextField(
-        _(u"Timeline Headline"),
+        _(u"Text"),
         blank=True,
         null=True
     )
     start_date = models.DateField(
-        _(u'Timeline start date'),
+        _(u'Start date'),
         blank=True,
         null=True
     )
     end_date = models.DateField(
-        _(u'Timeline start date'),
+        _(u'End date'),
         blank=True,
         null=True
     )
