@@ -102,7 +102,7 @@ class Infographic(Publishable):
         verbose_name=_(u'Timeline'),
         null=True,
         blank=True,
-        related_name='timeline',
+        related_name='infographic_timeline',
         on_delete=models.SET_NULL,
         help_text=_(u'Set this and provide JSON, DOC or Items')
     )
@@ -128,7 +128,7 @@ class InfographicInfographicItem(models.Model):
         verbose_name=_(u'Infographic'),
         null=True,
         blank=True,
-        related_name='infographic',
+        related_name='infographicitem_infographic',
         on_delete=models.SET_NULL
     )
 
@@ -150,7 +150,7 @@ class InfographicPost(models.Model):
         verbose_name=_(u'Infographic'),
         null=True,
         blank=True,
-        related_name='infographic',
+        related_name='infographicpost_infographic',
         on_delete=models.SET_NULL
     )
 
@@ -280,7 +280,7 @@ class InfographicTimelineItem(models.Model):
         verbose_name=_(u'Timeline'),
         null=True,
         blank=True,
-        related_name='timeline',
+        related_name='infographicitem_timeline',
         on_delete=models.SET_NULL,
     )
 
