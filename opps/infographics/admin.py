@@ -73,6 +73,9 @@ class InfographicAdmin(PublishableAdmin):
 
 class InfographicItemAdmin(admin.ModelAdmin):
     raw_id_fields = ('image', 'album')
+    list_display = ('title', 'group', 'order')
+    list_filter = ('group', 'infographic_item')
+    list_editable = ('order',)
     form = InfographicItemForm
 
 
