@@ -82,6 +82,11 @@ class InfographicDetail(DetailView):
         """
         names = []
 
+        self.template_name_suffix = "{0}_{1}".format(
+            self.template_name_suffix,
+            self.object.type
+        )
+
         if hasattr(self.object, '_meta'):
             app_label = self.object._meta.app_label
             object_name = self.object._meta.object_name.lower()
@@ -143,4 +148,12 @@ class InfographicDetail(DetailView):
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
         context = super(InfographicDetail, self).get_context_data(**kwargs)
+
+        # get item by slug
+        if 'item_slug' in kwargs:
+            item_slug = kwargs['item_slug']
+            context['item'] = get_object_or_404(
+                self.object.items,
+                slug=item_slug
+            )
         return self.render_to_response(context)

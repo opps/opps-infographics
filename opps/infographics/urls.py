@@ -19,9 +19,9 @@ urlpatterns = patterns(
         name='channel_infographic'
     ),
     url(
-        r'^(?P<slug>[\w-]+)/(?P<result>[\w-]+)$',
+        r'^(?P<slug>[\w-]+)/(?P<item_slug>[\w-]+)$',
         InfographicDetail.as_view(),
-        name='result_infographic'
+        name='item_infographic'
     ),
     url(
         r'^(?P<slug>[\w-]+)$',

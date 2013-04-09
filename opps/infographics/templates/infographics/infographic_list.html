@@ -9,7 +9,8 @@ Opps Infographic List
     {% if infographic.main_image %}
     <img src="{% thumbor_url infographic.main_image.image.url width=10 %}" />
     {% endif %}
-    <a href="{% url 'infographics:open_infographic' infographic.slug %}" alt="{{ infographic.title }}">{{ infographic.title }}</a>
+    <a href="{% url 'infographics:open_infographic' infographic.slug %}" alt="{{ infographic.title }}">{{ infographic.title }}</a><br />
+    {{ infographic.headline|safe }}
   </li>
   {% empty %}
          No infographics
