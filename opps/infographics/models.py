@@ -18,7 +18,6 @@ class Infographic(Publishable):
         ("gallery", _(u"Photo Gallery")),
         ("css", _(u"Custom CSS")),
         ("timeline", _(u"Timeline")),
-        ("mixed", _(u"Mixed")),
     )
     title = models.CharField(_(u"Title"), max_length=255)
     slug = models.SlugField(

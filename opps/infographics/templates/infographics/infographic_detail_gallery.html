@@ -11,7 +11,7 @@
     </div>
     <div id='infographic-menu-items' style='position:relative; top:-42px;'>
         <ul style='list-style:none;'>
-        {# ATENTION: If item has 'group' create submenus example: http://virgula.uol.com.br/ver/estaticas/nelson-rodrigues/ #}
+        {# ATENTION: If menu_item has 'group' create submenus example: http://virgula.uol.com.br/ver/estaticas/nelson-rodrigues/ #}
         {% for menu_item in infographic.items.all %}
             <li style='float:left;margin-right:10px;'>
                 <a style="text-decoration: none; {%if item.slug == menu_item.slug %} color:white; {%else%} color:orange;{%endif%}"
