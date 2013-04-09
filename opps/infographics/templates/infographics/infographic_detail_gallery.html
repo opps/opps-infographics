@@ -1,0 +1,64 @@
+{% load thumbor_tags %}
+
+ <a href="{% url 'infographics:list_infographic'%}">< All infographics </a><br/>
+ Opps Infographic Detail
+
+<div id="infographic-top">
+    <div id='infographic-top-image'>
+        {% if infographic.top_image %}
+        <img src="{% thumbor_url infographic.top_image.image.url width=960 %}" />
+        {% endif %}
+    </div>
+    <div id='infographic-menu-items' style='position:relative; top:-42px;'>
+        <ul style='list-style:none;'>
+        {# ATENTION: If item has 'group' create submenus example: http://virgula.uol.com.br/ver/estaticas/nelson-rodrigues/ #}
+        {% for menu_item in infographic.items.all %}
+            <li style='float:left;margin-right:10px;'>
+                <a style="text-decoration: none; {%if item.slug == menu_item.slug %} color:white; {%else%} color:orange;{%endif%}"
+                    href="{% url 'infographics:item_infographic' infographic.slug menu_item.slug%}">
+                    {{ menu_item.title }}
+                </a>
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
+</div>
+
+<div id="infographic-content" style='clear:both;width:960px;'>
+
+    <div id='infographic-item-description'
+       style="float:left;max-width:320px;height:400px;width:320px;overflow-y:scroll">
+       {# show main description or specific item description #}
+       {# 'item' exists only if a slug is passed /infographics/slug/item-slug #}
+       {% if not item %}
+        <p> {{ infographic.description|safe }} </p>
+       {% else %}
+        <p> {{ item.description|safe }} </p>
+       {% endif %}
+
+    </div>
+
+    <div id="infographic-item-image"
+       style="float:right; width:600px;">
+        {# show main image or single item album or image #}
+        {% if not item %}
+            {% if infographic.main_image %}
+                <img src="{% thumbor_url infographic.main_image.image.url width=600 %}" />
+            {% endif %}
+        {% else %}
+            {# Item has album? #}
+            {% if item.album %}
+               {# SHOW IMAGE SLIDER USING item.album images #}
+               {% for image in item.album.images %}
+                   <img src="{% thumbor_url image.image.url width=600 %}" />
+               {% endfor %}
+            {% else %}
+               {# if not has album show item static image #}
+               <img src="{% thumbor_url item.image.image.url width=600 %}" />
+            {% endif %}
+
+        {% endif %}
+
+    </div>
+
+</div>
