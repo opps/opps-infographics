@@ -190,6 +190,17 @@ class InfographicItem(models.Model):
         related_name='infographicitem_album',
         verbose_name=_(u'Album'),
     )
+
+    timeline = models.ForeignKey(
+        'infographics.InfographicTimeline',
+        verbose_name=_(u'Timeline'),
+        null=True,
+        blank=True,
+        related_name='infographicitem_timeline',
+        on_delete=models.SET_NULL,
+        help_text=_(u'Set this and provide JSON, DOC or Items')
+    )
+
     order = models.IntegerField(_(u"Order"), default=0)
 
     def belongs(self):

@@ -46,8 +46,10 @@
                 <img src="{% thumbor_url infographic.main_image.image.url width=600 %}" />
             {% endif %}
         {% else %}
-            {# Item has album? #}
-            {% if item.album %}
+            {% if item.timeline %}
+            {# Embed timeline JS #}
+
+            {% elif item.album %}
                {# SHOW IMAGE SLIDER USING item.album images #}
                {% for image in item.album.images %}
                    <img src="{% thumbor_url image.image.url width=600 %}" />
