@@ -165,12 +165,13 @@ class InfographicItem(models.Model):
         max_length=150,
         db_index=True
     )
-    description = models.TextField(_(u"Description"), blank=True)
+    description = models.TextField(_(u"Description"), null=True, blank=True)
 
     # optional for gallery and css
     group = models.CharField(
         _(u"Group"),
         max_length=255,
+        blank=True, null=True,
         help_text=_(u'To group menu items or to store custom attributes')
     )
 
@@ -191,6 +192,12 @@ class InfographicItem(models.Model):
         verbose_name=_(u'Album'),
     )
     order = models.IntegerField(_(u"Order"), default=0)
+
+    def belongs(self):
+        if not self.infographicitem_item.exists():
+            return _(u"No infographic")
+
+        return ", ".join(item.infographic.title for item in self.infographicitem_item.all())
 
     __unicode__ = lambda self: self.title
 
