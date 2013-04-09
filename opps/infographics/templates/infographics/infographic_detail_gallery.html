@@ -64,3 +64,18 @@
     </div>
 
 </div>
+
+{# Load custom css and JS if needed #}
+{# NOTE: Designers also can create scpecific templates for infographics.. #}
+{# store in templates/infographics/infographic-slug.html #}
+{% block custom_css %}
+  <link rel="stylesheet" href="{{ infographic.css_path}}">
+{% endblock %}
+
+{% block custom_js %}
+
+  {% if infographic.js_path %}
+     <script src="{{ infographic.js_path }}"></script>
+  {%endif%}
+
+{% endblock %}
