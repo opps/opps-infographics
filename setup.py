@@ -6,7 +6,7 @@ from setuptools import setup, find_packages
 from opps import infographics
 
 
-install_requires = ["opps", "jsonfield"]
+install_requires = ["opps", "jsonfield", 'django-timelinejs']
 
 classifiers = ["Development Status :: 4 - Beta",
                "Intended Audience :: Developers",
@@ -18,6 +18,8 @@ classifiers = ["Development Status :: 4 - Beta",
                "Operating System :: OS Independent",
                "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
                'Topic :: Software Development :: Libraries :: Python Modules']
+
+dependency_links = ['-e git+git@github.com:YACOWS/django-timelinejs.git#egg=django-timelinejs']
 
 try:
     long_description = open('README.md').read()
@@ -40,6 +42,7 @@ setup(
     packages=find_packages(exclude=('doc', 'docs',)),
     package_dir={'opps': 'opps'},
     install_requires=install_requires,
+    dependency_links=dependency_links,
     include_package_data=True,
     package_data={
         'infographics': ['templates/*']

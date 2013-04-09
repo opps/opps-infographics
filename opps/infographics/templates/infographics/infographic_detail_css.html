@@ -1,0 +1,85 @@
+{% load thumbor_tags %}
+
+{# This should a generic CSSable and JSable teplate #}
+{# exaples: #}
+{#  http://virgula.uol.com.br/ver/estaticas/custo-mulher-sexualmente-ativa  #}
+{#  http://virgula.uol.com.br/ver/estaticas/fita-cassete-50-anos #}
+
+
+ <a href="{% url 'infographics:list_infographic'%}">< All infographics </a><br/>
+ Opps Infographic CSS Detail
+
+<div id="infographic-top">
+    <div id='infographic-top-image'>
+        {% if infographic.top_image %}
+        <img src="{% thumbor_url infographic.top_image.image.url width=960 %}" />
+        {% endif %}
+    </div>
+    <div id='infographic-menu-items'>
+        <ul>
+        {# ATENTION: If menu_item has 'group' create submenus example: http://virgula.uol.com.br/ver/estaticas/nelson-rodrigues/ #}
+        {% for menu_item in infographic.items.all %}
+            <li >
+                <a href="{% url 'infographics:item_infographic' infographic.slug menu_item.slug%}">
+                    {{ menu_item.title }}
+                </a>
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
+</div>
+
+<div id="infographic-content">
+
+    <div id='infographic-item-description'>
+       {# show main description or specific item description #}
+       {# 'item' exists only if a slug is passed /infographics/slug/item-slug #}
+       {% if not item %}
+        <p> {{ infographic.description|safe }} </p>
+       {% else %}
+        <p> {{ item.description|safe }} </p>
+       {% endif %}
+
+    </div>
+
+    <div id="infographic-item-image">
+        {# show main image or single item album or image #}
+        {% if not item %}
+            {% if infographic.main_image %}
+                <img src="{% thumbor_url infographic.main_image.image.url width=600 %}" />
+            {% endif %}
+        {% else %}
+            {% if item.timeline %}
+            {# Embed timeline JS #}
+
+            {% elif item.album %}
+               {# SHOW IMAGE SLIDER USING item.album images #}
+               {% for image in item.album.images %}
+                   <img src="{% thumbor_url image.image.url width=600 %}" />
+               {% endfor %}
+            {% else %}
+               {# if not has album show item static image #}
+               <img src="{% thumbor_url item.image.image.url width=600 %}" />
+            {% endif %}
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+
+{# Load custom css and JS if needed #}
+{# NOTE: Designers also can create scpecific templates for infographics.. #}
+{# store in templates/infographics/infographic-slug.html #}
+{% block custom_css %}
+  <link rel="stylesheet" href="{{ infographic.css_path}}">
+{% endblock %}
+
+{% block custom_js %}
+
+  {% if infographic.js_path %}
+     <script src="{{ infographic.js_path }}"></script>
+  {%endif%}
+
+{% endblock %}

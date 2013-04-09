@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from jsonfield import JSONField
-
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
@@ -97,13 +95,13 @@ class Infographic(Publishable):
 
     # Timeline
     timeline = models.ForeignKey(
-        'infographics.InfographicTimeline',
+        'timelinejs.Timeline',
         verbose_name=_(u'Timeline'),
         null=True,
         blank=True,
         related_name='infographic_timeline',
         on_delete=models.SET_NULL,
-        help_text=_(u'Set this and provide JSON, DOC or Items')
+        help_text=_(u'Set this and provide JSON, DOC or Events')
     )
 
     def __unicode__(self):
@@ -192,7 +190,7 @@ class InfographicItem(models.Model):
     )
 
     timeline = models.ForeignKey(
-        'infographics.InfographicTimeline',
+        'timelinejs.Timeline',
         verbose_name=_(u'Timeline'),
         null=True,
         blank=True,
@@ -210,176 +208,6 @@ class InfographicItem(models.Model):
         return ", ".join(item.infographic.title for item in self.infographicitem_item.all())
 
     __unicode__ = lambda self: self.title
-
-
-class InfographicTimeline(models.Model):
-    title = models.CharField(_(u"Title"), max_length=255)
-    # timeline
-    json = JSONField(
-        _(u"Timeline Json"),
-        blank=True,
-        null=True,
-        help_text=_(
-            u'Optional JSON for timelinejs if not provided'
-            u' you should add items or google spreadsheet'
-        )
-    )
-    source = models.URLField(
-        _(u"Source URL"),
-        blank=True,
-        null=True,
-        help_text=_(
-            u'Optional Google Spreadsheet or json URL for timelinejs '
-            u' if not provided you should add items or json'
-        )
-    )
-
-    # config
-    type = models.CharField(
-        _(u"Type"),
-        max_length=255,
-        blank=True,
-        null=True,
-        default='default'
-    )
-    width = models.CharField(
-        _(u"Width"),
-        max_length=5,
-        blank=True,
-        null=True,
-        default="100%"
-    )
-    height = models.CharField(
-        _(u"Height"),
-        max_length=5,
-        blank=True,
-        null=True,
-        default="100%"
-    )
-    embed_id = models.CharField(
-        _(u"Embed id"),
-        max_length=255,
-        null=True,
-        blank=True
-    )
-    lang = models.CharField(_(u"Language"), max_length=255, default='pt-br')
-    start_at_end = models.BooleanField(default=False)
-    start_at_slide = models.IntegerField(default=0)
-    start_zoom_adjust = models.IntegerField(default=0)
-    hash_bookmark = models.BooleanField(default=False)
-    debug = models.BooleanField(default=False)
-    gmap_key = models.CharField(
-        _(u"Gmap Key"),
-        max_length=255,
-        null=True,
-        blank=True
-    )
-    maptype = models.CharField(
-        _(u"Map Type"),
-        max_length=255,
-        null=True,
-        blank=True,
-    )
-    font = models.CharField(
-        _(u"Font"),
-        max_length=255,
-        null=True,
-        blank=True,
-    )
-
-    __unicode__ = lambda self: self.title
-
-
-class InfographicTimelineSlide(models.Model):
-    # Timeline
-    timeline = models.ForeignKey(
-        'infographics.InfographicTimeline',
-        verbose_name=_(u'Timeline'),
-        null=True,
-        blank=True,
-        related_name='infographictimelineslide_timeline',
-        on_delete=models.SET_NULL,
-    )
-
-    type = models.CharField(
-        _(u"Item type"),
-        max_length=255,
-        blank=True,
-        null=True,
-        default='date',
-        help_text=_(
-            u'Use "date",  "era", "title" or "chart"'
-            u' Note: Only one can be "title"'
-            u' and "era" displays only headline and dates'
-        )
-    )
-    headline = models.CharField(
-        _(u"Headline"),
-        max_length=255,
-        blank=True,
-        null=True
-    )
-    text = models.TextField(
-        _(u"Text"),
-        blank=True,
-        null=True
-    )
-    start_date = models.DateField(
-        _(u'Start date'),
-        blank=True,
-        null=True
-    )
-    end_date = models.DateField(
-        _(u'End date'),
-        blank=True,
-        null=True
-    )
-    tag = models.CharField(
-        _(u"Tag"),
-        max_length=140,
-        null=True,
-        blank=True
-    )
-    value = models.CharField(
-        _(u"Chart Value"),
-        max_length=140,
-        null=True,
-        blank=True,
-        help_text=_(u'This is only used for "chart" type')
-    )
-    classname = models.CharField(
-        _(u"Classname"),
-        max_length=255,
-        null=True,
-        blank=True
-    )
-    media = models.TextField(
-        _(u"Media"),
-        blank=True,
-        null=True,
-    )
-    caption = models.CharField(
-        _(u"Media caption"),
-        max_length=255,
-        blank=True,
-        null=True,
-    )
-    credit = models.CharField(
-        _(u"Media credit"),
-        max_length=255,
-        blank=True,
-        null=True,
-    )
-    thumbnail = models.CharField(
-        _(u"Media thumbnail"),
-        max_length=500,
-        blank=True,
-        null=True,
-        help_text=_(u'Optional 32x32 thumbnail')
-    )
-    order = models.IntegerField(_(u"Order"), default=0)
-
-    __unicode__ = lambda self: self.headline
 
 
 class InfographicBox(BaseBox):
