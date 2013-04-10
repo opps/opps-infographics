@@ -51,7 +51,8 @@
         {% else %}
             {% if item.timeline %}
             {# Embed timeline JS #}
-
+                {% load timeline %}
+                {% timeline src=item.timeline.pk height=300 width=300 %}
             {% elif item.album %}
                {# SHOW IMAGE SLIDER USING item.album images #}
                {% for image in item.album.images %}
