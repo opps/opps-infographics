@@ -72,7 +72,7 @@ class InfographicAdmin(PublishableAdmin):
 
 class InfographicItemAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("title",)}
-    raw_id_fields = ('image', 'album')
+    raw_id_fields = ('image', 'album', 'timeline')
     list_display = ('title', 'group', 'order', 'belongs')
     list_filter = ('group', 'infographic_item')
     list_editable = ('order',)
