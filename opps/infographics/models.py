@@ -1,13 +1,16 @@
 # -*- coding: utf-8 -*-
-
+from django.conf import settings
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from django.core.exceptions import ValidationError
+from django.core.urlresolvers import reverse
 
 from taggit.managers import TaggableManager
 
 from opps.core.models import Publishable, BaseBox, BaseConfig
+
+app_namespace = getattr(settings, 'OPPS_INFOGRAPHICS_URL_NAMESPACE', 'infographics')
 
 
 class Infographic(Publishable):
@@ -109,6 +112,19 @@ class Infographic(Publishable):
 
     class Meta:
         ordering = ['order']
+
+    def get_absolute_url(self):
+        return reverse(
+            '{0}:open_infographic'.format(app_namespace),
+            kwargs={'slug': self.slug}
+        )
+
+    def get_thumb(self):
+        return self.main_image
+
+    @property
+    def search_category(self):
+        return _("Infographic")
 
 
 class InfographicInfographicItem(models.Model):
