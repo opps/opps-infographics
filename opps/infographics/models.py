@@ -9,11 +9,12 @@ from django.core.urlresolvers import reverse
 from taggit.managers import TaggableManager
 
 from opps.core.models import Publishable, BaseBox, BaseConfig
+from opps.core.models import Slugged
 
 app_namespace = getattr(settings, 'OPPS_INFOGRAPHICS_URL_NAMESPACE', 'infographics')
 
 
-class Infographic(Publishable):
+class Infographic(Publishable, Slugged):
 
     TYPES = (
         ("gallery", _(u"Photo Gallery")),
@@ -21,12 +22,6 @@ class Infographic(Publishable):
         ("timeline", _(u"Timeline")),
     )
     title = models.CharField(_(u"Title"), max_length=255)
-    slug = models.SlugField(
-        _(u"URL"),
-        max_length=150,
-        unique=True,
-        db_index=True
-    )
     headline = models.TextField(_(u"Headline"), blank=True, null=True)
     description = models.TextField(
         _(u"Description"),

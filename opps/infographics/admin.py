@@ -55,7 +55,7 @@ class InfographicAdmin(PublishableAdmin):
 
     fieldsets = (
         (_(u'Identification'), {
-            'fields': ('title', 'slug')}),
+            'fields': ('site', 'title', 'slug')}),
         (_(u'Headline'), {
             'fields': ('headline', 'main_image', 'top_image', 'tags')}),
         (_(u'Description'), {
