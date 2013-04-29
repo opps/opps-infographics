@@ -3,62 +3,59 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Ellison Leão <ellisonleao@gmail.com>, 2013
-# josene <jsene@yacows.com.br>, 2013
-# Thiago Avelino <Thiagoavelinoster@gmail.com>, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: opps\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-04-18 12:00-0300\n"
-"PO-Revision-Date: 2013-04-26 17:52+0000\n"
-"Last-Translator: josene <jsene@yacows.com.br>\n"
-"Language-Team: Portuguese (Brazil) <opps-developers@googlegroups.com>\n"
+"PO-Revision-Date: 2013-04-23 16:32+0000\n"
+"Last-Translator: Bruno Rocha <rochacbruno@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: pt_BR\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: en_US\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: admin.py:57 admin.py:103
 msgid "Identification"
-msgstr "Identificação"
+msgstr "Identification"
 
 #: admin.py:59 models.py:27
 msgid "Headline"
-msgstr "Cabeçalho"
+msgstr "Headline"
 
 #: admin.py:61 models.py:29 models.py:165
 msgid "Description"
-msgstr "Descrição"
+msgstr "Description"
 
 #: admin.py:63 admin.py:105
 msgid "Relationships"
-msgstr "Relacionamentos"
+msgstr "Relationships"
 
 #: admin.py:65
 msgid "Config"
-msgstr "Configuração"
+msgstr "Config"
 
 #: admin.py:67 admin.py:107
 msgid "Publication"
-msgstr "Publicação"
+msgstr "Publication"
 
 #: models.py:16
 msgid "Photo Gallery"
-msgstr "Galeria de Fotos"
+msgstr "Photo Gallery"
 
 #: models.py:17
 msgid "Custom CSS"
-msgstr "CSS Customizado"
+msgstr "Custom CSS"
 
 #: models.py:18 models.py:99 models.py:194
 msgid "Timeline"
-msgstr "Linha do tempo"
+msgstr "Timeline"
 
 #: models.py:20 models.py:159
 msgid "Title"
-msgstr "Título"
+msgstr "Title"
 
 #: models.py:22 models.py:161
 msgid "URL"
@@ -66,92 +63,92 @@ msgstr "URL"
 
 #: models.py:32
 msgid "Main description, also used by timeline type"
-msgstr "Descrição principal, também usada pelo tipo de linha do tempo"
+msgstr "Main description, also used by timeline type"
 
 #: models.py:49
 msgid "Infographic Top Image"
-msgstr "Imagem superior do Infográfico"
+msgstr "Infographic Top Image"
 
 #: models.py:56
 msgid "Infographic Image"
-msgstr "Imagem do infográfico"
+msgstr "Infographic Image"
 
 #: models.py:63 models.py:202 models.py:238
 msgid "Order"
-msgstr "Ordem"
+msgstr "Order"
 
 #: models.py:67
 msgid "Infographic type"
-msgstr "Tipo de infográfico"
+msgstr "Infographic type"
 
 #: models.py:81
 msgid "Custom css path"
-msgstr "Caminho do CSS customizado"
+msgstr "Custom css path"
 
 #: models.py:85
 msgid "/static/css/file.css or http://domain.com/file.css"
-msgstr "/static/css/file.css ou http://domain.com/file.css"
+msgstr "/static/css/file.css or http://domain.com/file.css"
 
 #: models.py:89
 msgid "Custom Java Script path"
-msgstr "Caminho do Javascript customizado"
+msgstr "Custom Java Script path"
 
 #: models.py:93
 msgid "allowed only in the same domain"
-msgstr "Autorizado apenas para o mesmo domínio"
+msgstr "allowed only in the same domain"
 
 #: models.py:104
 msgid "Set this and provide JSON, DOC or Events"
-msgstr "Habilite isso e forneça um JSON, DOC ou Eventos"
+msgstr "Set this and provide JSON, DOC or Events"
 
 #: models.py:117
 msgid "Infographic Item"
-msgstr "Item de infográfico"
+msgstr "Infographic Item"
 
 #: models.py:125 models.py:147 models.py:236 models.py:260
 msgid "Infographic"
-msgstr "Infográfico"
+msgstr "Infographic"
 
 #: models.py:139
 msgid "Infographic Post"
-msgstr "Post de infográfico"
+msgstr "Infographic Post"
 
 #: models.py:169
 msgid "Group"
-msgstr "Grupo"
+msgstr "Group"
 
 #: models.py:172
 msgid "To group menu items or to store custom attributes"
-msgstr "Para agrupar itens do menu ou guardar atributos customizados"
+msgstr "To group menu items or to store custom attributes"
 
 #: models.py:177
 msgid "Infographic Item Image"
-msgstr "Imagem de item no infográfico"
+msgstr "Infographic Item Image"
 
 #: models.py:180
 msgid "Image"
-msgstr "Imagem"
+msgstr "Image"
 
 #: models.py:189
 msgid "Album"
-msgstr "Álbum"
+msgstr "Album"
 
 #: models.py:199
 msgid "Set this and provide JSON, DOC or Items"
-msgstr "Habilite isso e forneça um JSON, DOC ou Itens"
+msgstr "Set this and provide JSON, DOC or Items"
 
 #: models.py:206
 msgid "No infographic"
-msgstr "Sem infográfico"
+msgstr "No infographic"
 
 #: models.py:229
 msgid "Infographic Box"
-msgstr "Box de infográfico"
+msgstr "Infographic Box"
 
 #: models.py:246
 msgid "Infographic not published!"
-msgstr "Infográfico não publicado!"
+msgstr "Infographic not published!"
 
 #: models.py:249
 msgid "Infographic date_available is greater than today!"
-msgstr "Data de publicação é maior do que data atual!"
+msgstr "Infographic date_available is greater than today!"
