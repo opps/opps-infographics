@@ -10,6 +10,7 @@ from .models import (Infographic, InfographicPost, InfographicBox,
 from opps.core.admin import PublishableAdmin
 
 from redactor.widgets import RedactorEditor
+from opps.core.admin import apply_opps_rules
 
 
 class InfographicAdminForm(forms.ModelForm):
@@ -43,6 +44,7 @@ class InfographicItemInline(admin.TabularInline):
     classes = ('collapse',)
 
 
+@apply_opps_rules('infographics')
 class InfographicAdmin(PublishableAdmin):
     form = InfographicAdminForm
     prepopulated_fields = {"slug": ["title"]}
@@ -70,6 +72,7 @@ class InfographicAdmin(PublishableAdmin):
     )
 
 
+@apply_opps_rules('infographics')
 class InfographicItemAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("title",)}
     raw_id_fields = ('image', 'album', 'timeline')
