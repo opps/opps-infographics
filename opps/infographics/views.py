@@ -158,6 +158,6 @@ class InfographicDetail(DetailView):
             )
 
         if self.object.channel:
-            context['channel'] = self.channel
+            context['channel'] = self.object.channel
 
         return self.render_to_response(context)
