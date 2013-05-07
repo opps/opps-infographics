@@ -59,7 +59,7 @@ class Infographic(Publishable, Slugged):
     )
 
     order = models.IntegerField(_(u"Order"), default=0)
-    tags = TaggableManager(blank=True)
+    tags = TaggableManager(blank=True, verbose_name=u'Tags')
 
     type = models.CharField(
         _(u"Infographic type"),
