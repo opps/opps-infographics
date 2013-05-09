@@ -156,4 +156,8 @@ class InfographicDetail(DetailView):
                 self.object.items,
                 slug=item_slug
             )
+
+        if self.object.channel:
+            context['channel'] = self.object.channel
+
         return self.render_to_response(context)
