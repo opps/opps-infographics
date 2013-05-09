@@ -1,4 +1,4 @@
-{% load thumbor_tags %}
+{% load images_tags %}
 
  <a href="{% url 'infographics:list_infographic'%}">< All infographics </a><br/>
  Opps Infographic Detail
@@ -6,7 +6,7 @@
 <div id="infographic-top">
     <div id='infographic-top-image'>
         {% if infographic.top_image %}
-        <img src="{% thumbor_url infographic.top_image.image.url width=960 %}" />
+        <img src="{% image_url infographic.top_image.image.url width=960 %}" />
         {% endif %}
     </div>
     <div id='infographic-menu-items' style='position:relative; top:-42px;'>

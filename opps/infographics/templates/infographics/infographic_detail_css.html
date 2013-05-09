@@ -1,4 +1,4 @@
-{% load thumbor_tags %}
+{% load images_tags %}
 
 {# This should a generic CSSable and JSable teplate #}
 {# exaples: #}
@@ -12,7 +12,7 @@
 <div id="infographic-top">
     <div id='infographic-top-image'>
         {% if infographic.top_image %}
-        <img src="{% thumbor_url infographic.top_image.image.url width=960 %}" />
+        <img src="{% image_url infographic.top_image.image.url width=960 %}" />
         {% endif %}
     </div>
     <div id='infographic-menu-items'>
@@ -46,7 +46,7 @@
         {# show main image or single item album or image #}
         {% if not item %}
             {% if infographic.main_image %}
-                <img src="{% thumbor_url infographic.main_image.image.url width=600 %}" />
+                <img src="{% image_url infographic.main_image.image.url width=600 %}" />
             {% endif %}
         {% else %}
             {% if item.timeline %}
@@ -58,11 +58,11 @@
             {% elif item.album %}
                {# SHOW IMAGE SLIDER USING item.album images #}
                {% for image in item.album.images %}
-                   <img src="{% thumbor_url image.image.url width=600 %}" />
+                   <img src="{% image_url image.image.url width=600 %}" />
                {% endfor %}
             {% else %}
                {# if not has album show item static image #}
-               <img src="{% thumbor_url item.image.image.url width=600 %}" />
+               <img src="{% image_url item.image.image.url width=600 %}" />
             {% endif %}
 
         {% endif %}

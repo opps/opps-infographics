@@ -1,4 +1,4 @@
-{% load thumbor_tags %}
+{% load images_tags %}
 {% load endless %}
 Opps Infographic List
 
@@ -7,7 +7,7 @@ Opps Infographic List
   {% for infographic in infographics %}
   <li>
     {% if infographic.main_image %}
-    <img src="{% thumbor_url infographic.main_image.image.url width=10 %}" />
+    <img src="{% image_url infographic.main_image.image.url width=10 %}" />
     {% endif %}
     <a href="{% url 'infographics:open_infographic' infographic.slug %}" alt="{{ infographic.title }}">{{ infographic.title }}</a><br />
     {{ infographic.headline|safe }}
