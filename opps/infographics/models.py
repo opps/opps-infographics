@@ -235,12 +235,16 @@ class InfographicBox(BaseBox):
     def ordered_infographics(self, field='order'):
         now = timezone.now()
         qs = self.infographics.filter(
+            published=True,
+            date_available__lte=now,
             infographicboxinfographics_infographics__date_available__lte=now
         ).filter(
             Q(infographicboxinfographics_infographics__date_end__gte=now) |
             Q(infographicboxinfographics_infographics__date_end__isnull=True)
         )
-        return qs.order_by('infographicboxinfographics_infographics__order')
+        return qs.order_by(
+            'infographicboxinfographics_infographics__order'
+        ).distinct()
 
 
 class InfographicBoxInfographics(models.Model):
