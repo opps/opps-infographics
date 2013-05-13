@@ -2,7 +2,7 @@
 from django.contrib import admin
 from django import forms
 from django.utils.translation import ugettext_lazy as _
-
+from django.utils import timezone
 from .models import (Infographic, InfographicPost, InfographicBox,
                      InfographicBoxInfographics, InfographicConfig,
                      InfographicItem, InfographicInfographicItem)
@@ -91,7 +91,7 @@ class InfographicBoxInfographicsInline(admin.TabularInline):
     extra = 1
     fieldsets = [(None, {
         'classes': ('collapse',),
-        'fields': ('infographic', 'order')})]
+        'fields': ('infographic', 'order', 'date_available', 'date_end')})]
 
 
 class InfographicBoxAdmin(PublishableAdmin):
@@ -111,6 +111,18 @@ class InfographicBoxAdmin(PublishableAdmin):
             'classes': ('extrapretty'),
             'fields': ('published', 'date_available')}),
     )
+
+    def clean_ended_entries(self, request, queryset):
+        now = timezone.now()
+        for box in queryset:
+            ended = box.infographicboxinfographics_infographicboxes.filter(
+                date_end__lt=now
+            )
+            if ended:
+                ended.delete()
+    clean_ended_entries.short_description = _(u'Clean ended infographics')
+
+    actions = ('clean_ended_entries',)
 
 
 class InfographicConfigAdmin(PublishableAdmin):

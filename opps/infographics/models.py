@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.conf import settings
 from django.db import models
+from django.db.models import Q
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from django.core.exceptions import ValidationError
@@ -107,6 +108,7 @@ class Infographic(Publishable, Slugged):
 
     class Meta:
         ordering = ['order']
+        unique_together = ['site', 'slug']
 
     def get_absolute_url(self):
         return reverse(
@@ -230,6 +232,16 @@ class InfographicBox(BaseBox):
         through='infographics.InfographicBoxInfographics'
     )
 
+    def ordered_infographics(self, field='order'):
+        now = timezone.now()
+        qs = self.infographics.filter(
+            infographicboxinfographics_infographics__date_available__lte=now
+        ).filter(
+            Q(infographicboxinfographics_infographics__date_end__gte=now) |
+            Q(infographicboxinfographics_infographics__date_end__isnull=True)
+        )
+        return qs.order_by('infographicboxinfographics_infographics__order')
+
 
 class InfographicBoxInfographics(models.Model):
     infographicbox = models.ForeignKey(
@@ -247,6 +259,14 @@ class InfographicBoxInfographics(models.Model):
         verbose_name=_(u'Infographic'),
     )
     order = models.PositiveIntegerField(_(u'Order'), default=0)
+    date_available = models.DateTimeField(_(u"Date available"),
+                                          default=timezone.now, null=True)
+    date_end = models.DateTimeField(_(u"End date"), null=True, blank=True)
+
+    class Meta:
+        ordering = ('order',)
+        verbose_name = _('Infographic box infographics')
+        verbose_name_plural = _('Infographic boxes infographics')
 
     def __unicode__(self):
         return u"{0}-{1}".format(self.infographicbox.slug, self.infographic.slug)
