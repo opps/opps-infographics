@@ -11,6 +11,7 @@ from opps.core.admin import PublishableAdmin
 
 from redactor.widgets import RedactorEditor
 from opps.core.admin import apply_opps_rules
+from opps.images.generate import image_url
 
 
 class InfographicAdminForm(forms.ModelForm):
@@ -43,6 +44,16 @@ class InfographicItemInline(admin.TabularInline):
     extra = 1
     classes = ('collapse',)
 
+    readonly_fields = ['image_thumb']
+
+    def image_thumb(self, obj):
+        if obj.item.image:
+            return u'<img width="60px" height="60px" src="{0}" />'.format(
+                image_url(obj.item.image.image.url, width=60, height=60))
+        return _(u'No Image')
+    image_thumb.short_description = _(u'Thumbnail')
+    image_thumb.allow_tags = True
+
 
 @apply_opps_rules('infographics')
 class InfographicAdmin(PublishableAdmin):
@@ -59,7 +70,8 @@ class InfographicAdmin(PublishableAdmin):
         (_(u'Identification'), {
             'fields': ('site', 'title', 'slug')}),
         (_(u'Headline'), {
-            'fields': ('headline', 'main_image', 'top_image', 'tags')}),
+            'fields': ('headline', ('main_image', 'image_thumb'),
+                       ('top_image', 'top_thumb'), 'tags')}),
         (_(u'Description'), {
             'fields': ('description',)}),
         (_(u'Relationships'), {
@@ -71,6 +83,24 @@ class InfographicAdmin(PublishableAdmin):
             'fields': ('published', 'date_available', 'order')}),
     )
 
+    readonly_fields = ['image_thumb', 'top_thumb']
+
+    def image_thumb(self, obj):
+        if obj.main_image:
+            return u'<img width="60px" height="60px" src="{0}" />'.format(
+                image_url(obj.main_image.image.url, width=60, height=60))
+        return _(u'No Image')
+    image_thumb.short_description = _(u'Thumbnail')
+    image_thumb.allow_tags = True
+
+    def top_thumb(self, obj):
+        if obj.top_image:
+            return u'<img width="60px" height="60px" src="{0}" />'.format(
+                image_url(obj.top_image.image.url, width=60, height=60))
+        return _(u'No Image')
+    top_thumb.short_description = _(u'Thumbnail')
+    top_thumb.allow_tags = True
+
 
 @apply_opps_rules('infographics')
 class InfographicItemAdmin(admin.ModelAdmin):
@@ -81,6 +111,29 @@ class InfographicItemAdmin(admin.ModelAdmin):
     list_editable = ('order',)
     ordering = ('order',)
     form = InfographicItemForm
+
+    fieldsets = [(None, {'fields':
+                         ('title',
+                          'slug',
+                          'description',
+                          'group',
+                          ('image', 'image_thumb'),
+                          'album',
+                          'timeline',
+                          'order'
+                         )
+    })]
+
+
+    readonly_fields = ['image_thumb']
+
+    def image_thumb(self, obj):
+        if obj.image:
+            return u'<img width="60px" height="60px" src="{0}" />'.format(
+                image_url(obj.image.image.url, width=60, height=60))
+        return _(u'No Image')
+    image_thumb.short_description = _(u'Thumbnail')
+    image_thumb.allow_tags = True
 
 
 class InfographicBoxInfographicsInline(admin.TabularInline):
