@@ -59,7 +59,8 @@ class InfographicItemInline(admin.TabularInline):
 class InfographicAdmin(PublishableAdmin):
     form = InfographicAdminForm
     prepopulated_fields = {"slug": ["title"]}
-    list_display = ['title', 'channel', 'type', 'date_available', 'published']
+    list_display = ['title', 'channel', 'type', 'date_available',
+                    'published', 'preview_url']
     list_filter = ["date_available", "published", "channel"]
     search_fields = ["title", "headline", "description"]
     exclude = ('user',)
@@ -84,14 +85,6 @@ class InfographicAdmin(PublishableAdmin):
     )
 
     readonly_fields = ['image_thumb', 'top_thumb']
-
-    def image_thumb(self, obj):
-        if obj.main_image:
-            return u'<img width="60px" height="60px" src="{0}" />'.format(
-                image_url(obj.main_image.image.url, width=60, height=60))
-        return _(u'No Image')
-    image_thumb.short_description = _(u'Thumbnail')
-    image_thumb.allow_tags = True
 
     def top_thumb(self, obj):
         if obj.top_image:

@@ -138,12 +138,12 @@ class InfographicDetail(DetailView):
 
     def get_object(self):
         self.site = get_current_site(self.request)
-        return get_object_or_404(
-            Infographic,
-            slug=self.kwargs['slug'],
-            published=True,
-            date_available__lte=timezone.now()
-        )
+        filters = dict(slug=self.kwargs['slug'])
+        preview_enabled = self.request.user and self.request.user.is_staff
+        if not preview_enabled:
+            filters['date_available__lte'] = timezone.now()
+            filters['published'] = True
+        return get_object_or_404(Infographic, **filters)
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
