@@ -19,7 +19,8 @@ classifiers = ["Development Status :: 4 - Beta",
                "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
                'Topic :: Software Development :: Libraries :: Python Modules']
 
-dependency_links = ['-e git+https://github.com/opps/opps-timelinejs.git#egg=opps-timelinejs']
+dependency_links = ['https://github.com/opps/opps-timelinejs/tarball/master'
+                    '#egg=opps-timelinejs']
 
 try:
     long_description = open('README.md').read()
@@ -43,8 +44,4 @@ setup(
     package_dir={'opps': 'opps'},
     install_requires=install_requires,
     dependency_links=dependency_links,
-    include_package_data=True,
-    package_data={
-        'infographics': ['templates/*']
-    }
 )
