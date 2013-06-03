@@ -54,7 +54,7 @@
                 {% timeline src=item.timeline.pk height=600 width=600 %}
             {% elif item.album %}
                {# SHOW IMAGE SLIDER USING item.album images #}
-               {% for image in item.album.images %}
+               {% for image in item.album.all_images %}
                    <img src="{% image_url image.image.url width=600 %}" />
                {% endfor %}
             {% else %}

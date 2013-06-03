@@ -78,7 +78,7 @@ class InfographicAdmin(PublishableAdmin):
         (_(u'Relationships'), {
             'fields': ('channel', 'timeline')}),
         (_(u'Config'), {
-            'fields': ('type', 'css_path', 'js_path')}),
+            'fields': ('type', 'css_text', 'css_path', 'js_path')}),
         (_(u'Publication'), {
             'classes': ('extrapretty'),
             'fields': ('published', 'date_available', 'order')}),
@@ -113,7 +113,8 @@ class InfographicItemAdmin(admin.ModelAdmin):
                           ('image', 'image_thumb'),
                           'album',
                           'timeline',
-                          'order'
+                          'order',
+                          'css_text',
                          )
     })]
 

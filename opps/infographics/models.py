@@ -14,12 +14,59 @@ from opps.core.models import Slugged
 
 app_namespace = getattr(settings, 'OPPS_INFOGRAPHICS_URL_NAMESPACE', 'infographics')
 
+CSS_TEXT = getattr(
+    settings,
+    'OPPS_INFOGRAPHICS_CSS_TEXT',
+    """
+    .infographic-box {
+
+    }
+    #infographic-top-image {
+
+    }
+    #infographic-top-image img {
+
+    }
+    #infographic-menu-items {
+        position:relative; top:-42px;
+    }
+    #infographic-menu-items .menu {
+        list-style:none;
+    }
+    #infographic-menu-items .item-menu {
+        float:left;
+        margin-right:10px;
+    }
+    #infographic-menu-items .item-menu a {
+        color: #FFA500;
+    }
+    #infographic-menu-items .item-menu a.item-active {
+       color:#FFFFFF;
+    }
+
+    #infographic-content {
+       clear:both;
+       width:960px;
+    }
+    #infographic-item-description {
+       float:left;
+       max-width:320px;
+       height:400px;
+       width:320px;
+       overflow-y:scroll
+    }
+    #infographic-item-image {
+       float:right;
+       width:600px;
+    }
+    """
+)
+
 
 class Infographic(Publishable, Slugged):
 
     TYPES = (
         ("gallery", _(u"Photo Gallery")),
-        ("css", _(u"Custom CSS")),
         ("timeline", _(u"Timeline")),
     )
     title = models.CharField(_(u"Title"), max_length=255)
@@ -76,6 +123,14 @@ class Infographic(Publishable, Slugged):
     )
 
     # css
+    css_text = models.TextField(
+        _(u"CSS"),
+        blank=True,
+        null=True,
+        default=CSS_TEXT,
+        help_text=_(u'Custom in-page css applied in all infographics type')
+    )
+
     css_path = models.CharField(
         _(u"Custom css path"),
         max_length=255,
@@ -213,6 +268,12 @@ class InfographicItem(models.Model):
     )
 
     order = models.IntegerField(_(u"Order"), default=0)
+
+    css_text = models.TextField(
+        _(u"CSS"),
+        blank=True,
+        null=True
+    )
 
     def belongs(self):
         if not self.infographicitem_item.exists():
