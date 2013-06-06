@@ -8,8 +8,8 @@ from opps.infographics.models import Infographic, InfographicBox
 register = template.Library()
 
 
-@register.simple_tag
-def get_all_infographics(number=5,
+@register.simple_tag(takes_context=True)
+def get_all_infographics(context, number=5,
                          channel_slug=None,
                          template_name='infographics/actives.html'):
 
@@ -23,11 +23,12 @@ def get_all_infographics(number=5,
 
     return t.render(template.Context({'active_infographics': active_infographics,
                                       'channel_slug': channel_slug,
-                                      'number': number}))
+                                      'number': number,
+                                      'context': context}))
 
 
-@register.simple_tag
-def get_infographicbox(slug, channel_slug=None, template_name=None):
+@register.simple_tag(takes_context=True)
+def get_infographicbox(context, slug, channel_slug=None, template_name=None):
     if channel_slug:
         slug = u"{0}-{1}".format(slug, channel_slug)
 
@@ -45,11 +46,13 @@ def get_infographicbox(slug, channel_slug=None, template_name=None):
     if template_name:
         t = template.loader.get_template(template_name)
 
-    return t.render(template.Context({'infographicbox': box, 'slug': slug}))
+    return t.render(template.Context({'infographicbox': box,
+                                      'slug': slug,
+                                      'context': context}))
 
 
-@register.simple_tag
-def get_all_infographicbox(channel_slug, template_name=None):
+@register.simple_tag(takes_context=True)
+def get_all_infographicbox(context, channel_slug, template_name=None):
     boxes = InfographicBox.objects.filter(site=settings.SITE_ID,
                                           date_available__lte=timezone.now(),
                                           published=True,
@@ -59,4 +62,4 @@ def get_all_infographicbox(channel_slug, template_name=None):
     if template_name:
         t = template.loader.get_template(template_name)
 
-    return t.render(template.Context({'infographicboxes': boxes}))
+    return t.render(template.Context({'infographicboxes': boxes, 'context': context}))
