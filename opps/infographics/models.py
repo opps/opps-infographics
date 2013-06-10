@@ -164,6 +164,8 @@ class Infographic(Publishable, Slugged):
     class Meta:
         ordering = ['order']
         unique_together = ['site', 'slug']
+        verbose_name = _(u'Infographic')
+        verbose_name_plural = _(u'Infographics')
 
     def get_absolute_url(self):
         return reverse(
@@ -221,6 +223,10 @@ class InfographicPost(models.Model):
 
     def __unicode__(self):
         return u"{0}-{1}".format(self.infographic.slug, self.post.slug)
+
+    class Meta:
+        verbose_name = _(u'Infographic Post')
+        verbose_name_plural = _(u'Infographic Posts')
 
 
 class InfographicItem(models.Model):
@@ -283,6 +289,10 @@ class InfographicItem(models.Model):
 
     __unicode__ = lambda self: self.title
 
+    class Meta:
+        verbose_name = _(u'Infographic Item')
+        verbose_name_plural = _(u'Infographic Items')
+
 
 class InfographicBox(BaseBox):
 
@@ -306,6 +316,10 @@ class InfographicBox(BaseBox):
         return qs.order_by(
             'infographicboxinfographics_infographics__order'
         ).distinct()
+
+    class Meta:
+        verbose_name = _(u'Infographic Box')
+        verbose_name_plural = _(u'Infographic Boxes')
 
 
 class InfographicBoxInfographics(models.Model):
