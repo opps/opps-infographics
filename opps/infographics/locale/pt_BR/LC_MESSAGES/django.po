@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# 
+#
 # Translators:
 # Ellison Leão <ellisonleao@gmail.com>, 2013
 # josene <jsene@yacows.com.br>, 2013
@@ -10,148 +10,199 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-18 12:00-0300\n"
+"POT-Creation-Date: 2013-06-10 11:50-0300\n"
 "PO-Revision-Date: 2013-04-26 17:52+0000\n"
 "Last-Translator: josene <jsene@yacows.com.br>\n"
 "Language-Team: Portuguese (Brazil) <opps-developers@googlegroups.com>\n"
+"Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: pt_BR\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: admin.py:57 admin.py:103
+#: admin.py:53 admin.py:93 admin.py:128
+msgid "No Image"
+msgstr "Sem Imagem"
+
+#: admin.py:54 admin.py:94 admin.py:129
+msgid "Thumbnail"
+msgstr ""
+
+#: admin.py:71 admin.py:153
 msgid "Identification"
 msgstr "Identificação"
 
-#: admin.py:59 models.py:27
+#: admin.py:73 models.py:73
 msgid "Headline"
 msgstr "Cabeçalho"
 
-#: admin.py:61 models.py:29 models.py:165
+#: admin.py:76 models.py:75 models.py:239
 msgid "Description"
 msgstr "Descrição"
 
-#: admin.py:63 admin.py:105
+#: admin.py:78 admin.py:155
 msgid "Relationships"
 msgstr "Relacionamentos"
 
-#: admin.py:65
+#: admin.py:80
 msgid "Config"
 msgstr "Configuração"
 
-#: admin.py:67 admin.py:107
+#: admin.py:82 admin.py:157
 msgid "Publication"
 msgstr "Publicação"
 
-#: models.py:16
+#: admin.py:170
+msgid "Clean ended infographics"
+msgstr "Sem infográfico"
+
+#: models.py:69
 msgid "Photo Gallery"
 msgstr "Galeria de Fotos"
 
-#: models.py:17
-msgid "Custom CSS"
-msgstr "CSS Customizado"
-
-#: models.py:18 models.py:99 models.py:194
+#: models.py:70 models.py:153 models.py:268
 msgid "Timeline"
 msgstr "Linha do tempo"
 
-#: models.py:20 models.py:159
+#: models.py:72 models.py:233
 msgid "Title"
 msgstr "Título"
 
-#: models.py:22 models.py:161
-msgid "URL"
-msgstr "URL"
-
-#: models.py:32
+#: models.py:78
 msgid "Main description, also used by timeline type"
 msgstr "Descrição principal, também usada pelo tipo de linha do tempo"
 
-#: models.py:49
+#: models.py:95
 msgid "Infographic Top Image"
 msgstr "Imagem superior do Infográfico"
 
-#: models.py:56
+#: models.py:102
 msgid "Infographic Image"
 msgstr "Imagem do infográfico"
 
-#: models.py:63 models.py:202 models.py:238
+#: models.py:109 models.py:276 models.py:340
 msgid "Order"
 msgstr "Ordem"
 
-#: models.py:67
+#: models.py:113
 msgid "Infographic type"
 msgstr "Tipo de infográfico"
 
-#: models.py:81
+#: models.py:127 models.py:279
+msgid "CSS"
+msgstr ""
+
+#: models.py:131
+msgid "Custom in-page css applied in all infographics type"
+msgstr ""
+
+#: models.py:135
 msgid "Custom css path"
 msgstr "Caminho do CSS customizado"
 
-#: models.py:85
+#: models.py:139
 msgid "/static/css/file.css or http://domain.com/file.css"
 msgstr "/static/css/file.css ou http://domain.com/file.css"
 
-#: models.py:89
+#: models.py:143
 msgid "Custom Java Script path"
 msgstr "Caminho do Javascript customizado"
 
-#: models.py:93
+#: models.py:147
 msgid "allowed only in the same domain"
 msgstr "Autorizado apenas para o mesmo domínio"
 
-#: models.py:104
+#: models.py:158
 msgid "Set this and provide JSON, DOC or Events"
 msgstr "Habilite isso e forneça um JSON, DOC ou Eventos"
 
-#: models.py:117
-msgid "Infographic Item"
-msgstr "Item de infográfico"
-
-#: models.py:125 models.py:147 models.py:236 models.py:260
+#: models.py:167 models.py:181 models.py:195 models.py:217 models.py:338
+#: models.py:366
 msgid "Infographic"
 msgstr "Infográfico"
 
-#: models.py:139
+#: models.py:168
+msgid "Infographics"
+msgstr "Infográficos"
+
+#: models.py:187 models.py:293
+msgid "Infographic Item"
+msgstr "Item de infográfico"
+
+#: models.py:209 models.py:228
 msgid "Infographic Post"
 msgstr "Post de infográfico"
 
-#: models.py:169
+#: models.py:229
+msgid "Infographic Posts"
+msgstr "Posts de infográfico"
+
+#: models.py:235
+msgid "URL"
+msgstr "URL"
+
+#: models.py:243
 msgid "Group"
 msgstr "Grupo"
 
-#: models.py:172
+#: models.py:246
 msgid "To group menu items or to store custom attributes"
 msgstr "Para agrupar itens do menu ou guardar atributos customizados"
 
-#: models.py:177
+#: models.py:251
 msgid "Infographic Item Image"
 msgstr "Imagem de item no infográfico"
 
-#: models.py:180
+#: models.py:254
 msgid "Image"
 msgstr "Imagem"
 
-#: models.py:189
+#: models.py:263
 msgid "Album"
 msgstr "Álbum"
 
-#: models.py:199
+#: models.py:273
 msgid "Set this and provide JSON, DOC or Items"
 msgstr "Habilite isso e forneça um JSON, DOC ou Itens"
 
-#: models.py:206
+#: models.py:286
 msgid "No infographic"
 msgstr "Sem infográfico"
 
-#: models.py:229
+#: models.py:294
+msgid "Infographic Items"
+msgstr "Itens de infográfico"
+
+#: models.py:321 models.py:331
 msgid "Infographic Box"
 msgstr "Box de infográfico"
 
-#: models.py:246
+#: models.py:322
+msgid "Infographic Boxes"
+msgstr "Boxes de infográfico"
+
+#: models.py:341
+msgid "Date available"
+msgstr ""
+
+#: models.py:343
+msgid "End date"
+msgstr ""
+
+#: models.py:347
+msgid "Infographic box infographics"
+msgstr "Infográfico - Box de infográfico"
+
+#: models.py:348
+msgid "Infographic boxes infographics"
+msgstr "Infográfico - Boxes de infográfico"
+
+#: models.py:356
 msgid "Infographic not published!"
 msgstr "Infográfico não publicado!"
 
-#: models.py:249
-msgid "Infographic date_available is greater than today!"
-msgstr "Data de publicação é maior do que data atual!"
+#~ msgid "Custom CSS"
+#~ msgstr "CSS Customizado"
+
+#~ msgid "Infographic date_available is greater than today!"
+#~ msgstr "Data de publicação é maior do que data atual!"
