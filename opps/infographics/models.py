@@ -372,3 +372,5 @@ class InfographicConfig(BaseConfig):
             "key_group", "key", "site",
             "channel", "article", "infographic"
         )
+        verbose_name = _(u'Infographic Config')
+        verbose_name_plural = _(u'Infographic Configs')
