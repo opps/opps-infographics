@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-10 11:50-0300\n"
+"POT-Creation-Date: 2013-06-11 13:02-0300\n"
 "PO-Revision-Date: 2013-04-26 17:52+0000\n"
 "Last-Translator: josene <jsene@yacows.com.br>\n"
 "Language-Team: Portuguese (Brazil) <opps-developers@googlegroups.com>\n"
@@ -26,7 +26,7 @@ msgstr "Sem Imagem"
 
 #: admin.py:54 admin.py:94 admin.py:129
 msgid "Thumbnail"
-msgstr ""
+msgstr "Miniatura"
 
 #: admin.py:71 admin.py:153
 msgid "Identification"
@@ -90,11 +90,11 @@ msgstr "Tipo de infográfico"
 
 #: models.py:127 models.py:279
 msgid "CSS"
-msgstr ""
+msgstr "CSS"
 
 #: models.py:131
 msgid "Custom in-page css applied in all infographics type"
-msgstr ""
+msgstr "CSS customizado na página aplicado para todos os tipos de infográficos"
 
 #: models.py:135
 msgid "Custom css path"
@@ -183,11 +183,11 @@ msgstr "Boxes de infográfico"
 
 #: models.py:341
 msgid "Date available"
-msgstr ""
+msgstr "Data de publicação"
 
 #: models.py:343
 msgid "End date"
-msgstr ""
+msgstr "Data final"
 
 #: models.py:347
 msgid "Infographic box infographics"
@@ -200,6 +200,14 @@ msgstr "Infográfico - Boxes de infográfico"
 #: models.py:356
 msgid "Infographic not published!"
 msgstr "Infográfico não publicado!"
+
+#: models.py:375
+msgid "Infographic Config"
+msgstr "Config de infográfico"
+
+#: models.py:376
+msgid "Infographic Configs"
+msgstr "Configs de infográfico"
 
 #~ msgid "Custom CSS"
 #~ msgstr "CSS Customizado"
