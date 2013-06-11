@@ -183,7 +183,7 @@ msgstr "Boxes de infográfico"
 
 #: models.py:341
 msgid "Date available"
-msgstr "Disponível em"
+msgstr "Data de publicação"
 
 #: models.py:343
 msgid "End date"
