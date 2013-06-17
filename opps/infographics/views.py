@@ -36,6 +36,13 @@ class InfographicList(ListView):
         self.site = get_current_site(self.request)
         return Infographic.objects.all_published()
 
+    def get(self, request, *args, **kwargs):
+        self.object_list = self.get_queryset()
+        context = self.get_context_data(object_list=self.object_list)
+        context['channel'] = Channel.objects.get_homepage(site=self.site)
+
+        return self.render_to_response(context)
+
 
 class ChannelInfographicList(ListView):
 
@@ -68,6 +75,18 @@ class ChannelInfographicList(ListView):
             published=True,
             date_available__lte=timezone.now()
         )
+
+    def get(self, request, *args, **kwargs):
+        self.object_list = self.get_queryset()
+        context = self.get_context_data(object_list=self.object_list)
+
+        try:
+            long_slug = self.kwargs['channel__long_slug'][:-1]
+            context['channel'] = Channel.objects.get(long_slug=long_slug)
+        except:
+            context['channel'] = Channel.objects.get_homepage(site=self.site)
+
+        return self.render_to_response(context)
 
 
 class InfographicDetail(DetailView):
