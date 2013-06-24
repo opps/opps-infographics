@@ -15,7 +15,10 @@ class InfographicIndex(SearchIndex, Indexable):
     def get_updated_field(self):
         return 'date_update'
 
-    def index_queryset(self):
-        return Infographic.objects.filter(
+    def get_model(self):
+        return Infographic
+
+    def index_queryset(self, using=None):
+        return self.get_model().objects.filter(
             date_available__lte=datetime.now(),
             published=True)
