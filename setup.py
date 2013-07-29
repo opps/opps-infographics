@@ -38,7 +38,7 @@ setup(
     author=infographics.__author__,
     author_email=infographics.__email__,
     url='http://oppsproject.org',
-    download_url="https://github.com/YACOWS/opps-infographics/tarball/master",
+    download_url="https://github.com/opps/opps-infographics/tarball/master",
     license=infographics.__license__,
     packages=find_packages(exclude=('doc', 'docs',)),
     package_dir={'opps': 'opps'},

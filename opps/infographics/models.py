@@ -1,16 +1,12 @@
 # -*- coding: utf-8 -*-
 from django.conf import settings
 from django.db import models
-from django.db.models import Q
-from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
-from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
 
-from taggit.managers import TaggableManager
-
-from opps.core.models import Publishable, BaseBox, BaseConfig
+from opps.core.models import Publishable
 from opps.core.models import Slugged
+from opps.core.tags.models import Tagged
 
 app_namespace = getattr(settings, 'OPPS_INFOGRAPHICS_URL_NAMESPACE', 'infographics')
 
@@ -63,7 +59,7 @@ CSS_TEXT = getattr(
 )
 
 
-class Infographic(Publishable, Slugged):
+class Infographic(Publishable, Slugged, Tagged):
 
     TYPES = (
         ("gallery", _(u"Photo Gallery")),
@@ -83,12 +79,12 @@ class Infographic(Publishable, Slugged):
         blank=True,
         on_delete=models.SET_NULL
     )
-    posts = models.ManyToManyField(
-        'articles.Post',
+    containers = models.ManyToManyField(
+        'containers.Container',
         null=True,
         blank=True,
-        related_name='infographic_post',
-        through='InfographicPost'
+        related_name='infographic_container',
+        through='InfographicContainer'
     )
     top_image = models.ForeignKey(
         'images.Image',
@@ -107,7 +103,6 @@ class Infographic(Publishable, Slugged):
     )
 
     order = models.IntegerField(_(u"Order"), default=0)
-    tags = TaggableManager(blank=True, verbose_name=u'Tags')
 
     type = models.CharField(
         _(u"Infographic type"),
@@ -203,13 +198,13 @@ class InfographicInfographicItem(models.Model):
         return u"{0}-{1}".format(self.infographic.slug, self.item.title)
 
 
-class InfographicPost(models.Model):
-    post = models.ForeignKey(
-        'articles.Post',
-        verbose_name=_(u'Infographic Post'),
+class InfographicContainer(models.Model):
+    container = models.ForeignKey(
+        'containers.Container',
+        verbose_name=_(u'Infographic Container'),
         null=True,
         blank=True,
-        related_name='infographicpost_post',
+        related_name='infographiccontainer_container',
         on_delete=models.SET_NULL
     )
     infographic = models.ForeignKey(
@@ -217,16 +212,16 @@ class InfographicPost(models.Model):
         verbose_name=_(u'Infographic'),
         null=True,
         blank=True,
-        related_name='infographicpost_infographic',
+        related_name='infographiccontainer_infographic',
         on_delete=models.SET_NULL
     )
 
     def __unicode__(self):
-        return u"{0}-{1}".format(self.infographic.slug, self.post.slug)
+        return u"{0}-{1}".format(self.infographic.slug, self.container.slug)
 
     class Meta:
-        verbose_name = _(u'Infographic Post')
-        verbose_name_plural = _(u'Infographic Posts')
+        verbose_name = _(u'Infographic Container')
+        verbose_name_plural = _(u'Infographic Containers')
 
 
 class InfographicItem(models.Model):
@@ -292,85 +287,3 @@ class InfographicItem(models.Model):
     class Meta:
         verbose_name = _(u'Infographic Item')
         verbose_name_plural = _(u'Infographic Items')
-
-
-class InfographicBox(BaseBox):
-
-    infographics = models.ManyToManyField(
-        'infographics.Infographic',
-        null=True, blank=True,
-        related_name='infographicbox_infographics',
-        through='infographics.InfographicBoxInfographics'
-    )
-
-    def ordered_infographics(self, field='order'):
-        now = timezone.now()
-        qs = self.infographics.filter(
-            published=True,
-            date_available__lte=now,
-            infographicboxinfographics_infographics__date_available__lte=now
-        ).filter(
-            Q(infographicboxinfographics_infographics__date_end__gte=now) |
-            Q(infographicboxinfographics_infographics__date_end__isnull=True)
-        )
-        return qs.order_by(
-            'infographicboxinfographics_infographics__order'
-        ).distinct()
-
-    class Meta:
-        verbose_name = _(u'Infographic Box')
-        verbose_name_plural = _(u'Infographic Boxes')
-
-
-class InfographicBoxInfographics(models.Model):
-    infographicbox = models.ForeignKey(
-        'infographics.InfographicBox',
-        null=True, blank=True,
-        on_delete=models.SET_NULL,
-        related_name='infographicboxinfographics_infographicboxes',
-        verbose_name=_(u'Infographic Box'),
-    )
-    infographic = models.ForeignKey(
-        'infographics.Infographic',
-        null=True, blank=True,
-        on_delete=models.SET_NULL,
-        related_name='infographicboxinfographics_infographics',
-        verbose_name=_(u'Infographic'),
-    )
-    order = models.PositiveIntegerField(_(u'Order'), default=0)
-    date_available = models.DateTimeField(_(u"Date available"),
-                                          default=timezone.now, null=True)
-    date_end = models.DateTimeField(_(u"End date"), null=True, blank=True)
-
-    class Meta:
-        ordering = ('order',)
-        verbose_name = _('Infographic box infographics')
-        verbose_name_plural = _('Infographic boxes infographics')
-
-    def __unicode__(self):
-        return u"{0}-{1}".format(self.infographicbox.slug, self.infographic.slug)
-
-    def clean(self):
-
-        if not self.infographic.published:
-            raise ValidationError(_(u'Infographic not published!'))
-
-
-class InfographicConfig(BaseConfig):
-
-    infographic = models.ForeignKey(
-        'infographics.Infographic',
-        null=True, blank=True,
-        on_delete=models.SET_NULL,
-        related_name='infographicconfig_infographics',
-        verbose_name=_(u'Infographic'),
-    )
-
-    class Meta:
-        permissions = (("developer", "Developer"),)
-        unique_together = (
-            "key_group", "key", "site",
-            "channel", "article", "infographic"
-        )
-        verbose_name = _(u'Infographic Config')
-        verbose_name_plural = _(u'Infographic Configs')
