@@ -285,7 +285,10 @@ class InfographicItem(models.Model):
         if not self.infographicitem_item.exists():
             return _(u"No infographic")
 
-        return ", ".join(item.infographic.title for item in self.infographicitem_item.all())
+        return ", ".join(
+            item.infographic.title for 
+            item in self.infographicitem_item.filter(infographic__isnull=False)
+        )
 
     __unicode__ = lambda self: self.title
 
