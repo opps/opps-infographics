@@ -47,6 +47,7 @@ CSS_TEXT = getattr(
     #infographic-content {
        clear:both;
        width:960px;
+       height:700px;
     }
     #infographic-item-description {
        float:left;
@@ -286,7 +287,7 @@ class InfographicItem(models.Model):
             return _(u"No infographic")
 
         return ", ".join(
-            item.infographic.title for 
+            item.infographic.title for
             item in self.infographicitem_item.filter(infographic__isnull=False)
         )
 
