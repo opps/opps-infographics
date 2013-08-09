@@ -3,6 +3,6 @@ host = https://www.transifex.com
 
 [opps.infographics]
 file_filter = opps/infographics/locale/<lang>/LC_MESSAGES/django.po
-source_file = opps/infographics/locale/en_US/LC_MESSAGES/django.po
-source_lang = en_US
+source_file = opps/infographics/locale/en/LC_MESSAGES/django.po
+source_lang = en
 
