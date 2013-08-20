@@ -63,3 +63,19 @@ def get_all_infographicbox(context, channel_slug, template_name=None):
         t = template.loader.get_template(template_name)
 
     return t.render(template.Context({'infographicboxes': boxes, 'context': context}))
+
+
+@register.simple_tag(takes_context=True)
+def get_post_infographic(context, post_slug, template_name=None):
+
+    infographic = Infographic.objects.filter(posts__slug=post_slug)
+    if infographic:
+      infographic = infographic[0]
+
+    t = template.loader.get_template('infographics/infographic_post.html')
+    if template_name:
+        t = template.loader.get_template(template_name)
+
+    return t.render(template.Context({'infographic': infographic, 'context': context}))
+
+
